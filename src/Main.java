@@ -3,31 +3,30 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Main {
-    Set<Product> productsSet = new HashSet<>();
-    Set<Recipes> RecipesSet = new HashSet<>();
-
+    static public Set<Product> productsSet = new HashSet<>();
+    static public Set<Recipe> recipeSet = new HashSet<>();
     public static void main(String[] args) {
-        Product product;
-        Recipes recipes;
 
-        Product product1 = new Product("Масло сливочное 100 гр.", 150, 40);
-        Product product2 = new Product("Масло подсолнечное 300 мл.", 120, 40);
+        Product product1 = new Product("Масло сливочное 1 кг.", 150, 40);
+        addProduct(product1);
+        Product product2 = new Product("Масло подсолнечное 1 кг.", 120, 40);
+        addProduct(product2);
         Product product3 = new Product("Сахар 1000 кг.", 60, 40);
+        addProduct(product3);
         Product product4 = new Product("Мука 1 кг", 130, 40);
+        addProduct(product4);
+        product3.setChesk();    // Признак товара / Куплен /
+        System.out.println(product1.toString());
 
-        product1.addHashSet(product1);
-        product2.addHashSet(product2);
-        product3.addHashSet(product3);
-        product4.addHashSet(product4);
-        // -------------рецепты-----------------
-        Recipes recipes1 = new Recipes("Пирог", product1, product2);
-        recipes1.addRecipes(recipes1);
-        System.out.println("recipes1.toString() = " + recipes1.toString());
-        System.out.println("recipes1.costOfProducts() = " + recipes1.costOfProducts());
-
+        // ------------- Рецепты -----------------
+        Recipe recipes1 = new Recipe("Пирог", Set.of(product2,product4,product3));
+        addRecipes(recipes1);
+        Recipe recipes2 = new Recipe("Торт", Set.of(product1,product2));
+        addRecipes(recipes2);
+        System.out.println(recipes1.toString());
 
         // Задание 2
-        ArrayList<Integer> intArray = new ArrayList<Integer>(20);
+        ArrayList<Integer> intArray = new ArrayList<>(20);
         // Заполняем массив случайными числами от 0 до 1000
         for (int i = 0; i < 20; i++) {
             intArray.add(i, (int) (Math.random() * 1000));
@@ -45,8 +44,18 @@ public class Main {
         }
         System.out.println("intArray = " + intArray);
 
+    }
 
+    static void addProduct(Product product){
+        if (!productsSet.add(product)){
+            throw new IllegalArgumentException("Повтор номенклатуры");
+        }
+    }
+
+    static void addRecipes(Recipe recipe){
+        if (!recipeSet.add(recipe)){
+            throw new IllegalArgumentException("Повтор рецепта");
+        }
     }
 
 }
-
